@@ -15,6 +15,11 @@ var ArticleSchema = new Schema({
     required: true
   },
 
+  image: {
+    data: Buffer,
+    type: String
+  },
+
   note: {
     type: Schema.Types.ObjectId,
     ref: "Note"

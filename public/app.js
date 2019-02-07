@@ -1,9 +1,16 @@
 
 $.getJSON("/articles", function(data) {
+
+    
     
     for (var i = 0; i < data.length; i++) {
-      
-      $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + "https://community.sportsengine.com" + data[i].link + "</p>");
+
+        var imageBox = $("<img>")
+        imageBox.attr('src', data[i].image);
+
+    //   $("#picture").append(imageBox);  
+      $("#articles").append(imageBox)
+      $("#articles").append("<p data-id='" + data[i]._id + "'>"  + "<br />" + data[i].title + "<br />" + "https://community.sportsengine.com" + data[i].link + "</p>");
     }
   });
   

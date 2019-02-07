@@ -33,25 +33,48 @@ mongoose.connect("mongodb://localhost/baseballdb", { useNewUrlParser: true });
 app.get("/scrape", function(req, res) {
 
   var url = "https://community.sportsengine.com/page/show/3539358?match_option=0&news_aggregator=1626264&tags=3598031";
-  var urlTwo = "https://community.sportsengine.com/page/show/3539358?match_option=0&news_aggregator=1626264&page=2&tags=3598031";
-  var urlThree = "https://community.sportsengine.com/page/show/3539358?match_option=0&news_aggregator=1626264&page=3&tags=3598031";
+//   var urlTwo = "https://community.sportsengine.com/page/show/3539358?match_option=0&news_aggregator=1626264&page=2&tags=3598031";
+//   var urlThree = "https://community.sportsengine.com/page/show/3539358?match_option=0&news_aggregator=1626264&page=3&tags=3598031";
   
-  axios.get(url && urlTwo && urlThree).then(function(response) {
+  axios.get(url).then(function(response) {
     
     var $ = cheerio.load(response.data);
 
     
-    $("h4").each(function(i, element) {
+    // $("h4").each(function(i, element) {
       
-      var result = {};
+    //   var result = {};
 
+    //   result.pic = $(this)
+    //   result.title = $(this)
+    //     .children("a")
+    //     .text();
+    //   result.link = $(this)
+    //     .children("a")
+    //     .attr("href");
+
+    $("div.articleHasImage").each(function(i, element) {
       
-      result.title = $(this)
-        .children("a")
-        .text();
-      result.link = $(this)
-        .children("a")
-        .attr("href");
+        var result = {};
+  
+    
+        result.image = $(this)
+          .children("a")
+          .children("img")
+          .attr("src");
+
+          result.title = $(this)
+            .children("h4")
+            .text();
+
+          result.link = $(this)
+            .children("h4")
+            .children("a")
+            .attr("href");
+
+          console.log("---------------")
+          console.log(result)
+          console.log("---------------")
 
       
       db.Article.create(result)
